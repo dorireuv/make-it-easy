@@ -1,0 +1,5 @@
+.idea
+.tox
+*.pyc
+dist
+*.egg-info
