@@ -7,7 +7,6 @@
 
 
 from setuptools import setup
-import sys
 import os
 import re
 
