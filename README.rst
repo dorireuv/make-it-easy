@@ -142,7 +142,7 @@ While doing it with make-it-easy can be easy as that:
  
  apple_with_two_leaves = an(apple, with_(2, 'leaves'))
  ripe_apple = apple_with_two_leaves.but(with_(0.95, 'ripeness'))
- unripe_apple = apple_with_two_leaves.but(with_(0.1, 'ripeness'))
+ unripe_apple = apple_with_two_leaves.but().with_(0.1, 'ripeness'))
  
  apple1 = make(ripe_apple)
  apple2 = make(unripe_apple)

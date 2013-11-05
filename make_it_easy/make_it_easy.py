@@ -105,6 +105,10 @@ class Maker(Donor):
     def make(self):
         return self._instantiator(**self._lookup)
 
+    def with_(self, value, name):
+        self._lookup[name] = SameValueDonor(value)
+        return self
+
     def but(self, *properties):
         lookup = _PropertyLookup()
         lookup.update(self._lookup)

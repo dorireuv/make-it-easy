@@ -19,6 +19,11 @@ class MakeItEasyTestCase(unittest.TestCase):
         an_order = make(an(order, with_(a_customer, as_('customer_'))))
         assert_that(an_order.customer.name, is_(equal_to('Alice')))
 
+    def test_can_use_maker_with_option_to_initialize_property_value(self):
+        a_customer = a(customer).with_('Alice', as_('name'))
+        an_order = make(an(order, with_(a_customer, as_('customer_'))))
+        assert_that(an_order.customer.name, is_(equal_to('Alice')))
+
     def test_a_distinct_property_value_instance_is_used_for_made_object_when_property_is_defined_with_a_maker(self):
         an_order = an(order, with_(a(customer, with_('Bob', as_('name'))), as_('customer_')))
         my_order1 = make(an_order)
