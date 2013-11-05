@@ -4,7 +4,7 @@
 # Copyright (C) 2013 Dori Reuveni
 # E-mail: dorireuv AT gmail DOT com
 
-# make-it-easy 1.0
+# make-it-easy 1.0.2
 # https://www.github.com/dorireuv/make-it-easy
 
 # Released subject to the Apache License (2.0)
