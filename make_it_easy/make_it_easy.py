@@ -4,7 +4,7 @@
 # Copyright (C) 2013 Dori Reuveni
 # E-mail: dorireuv AT gmail DOT com
 
-# make-it-easy 1.0.2
+# make-it-easy 1.0.3
 # https://www.github.com/dorireuv/make-it-easy
 
 # Released subject to the Apache License (2.0)
@@ -106,7 +106,10 @@ class Maker(Donor):
         return self._instantiator(**self._lookup)
 
     def with_(self, value, name):
-        self._lookup[name] = SameValueDonor(value)
+        if not isinstance(value, Donor):
+            value = SameValueDonor(value)
+
+        self._lookup[name] = value
         return self
 
     def but(self, *properties):
@@ -122,10 +125,7 @@ class Maker(Donor):
 
 class SeqOfProperties(Donor):
     def __init__(self, iterable, seq_class):
-        self._donors = tuple(map(
-            lambda property_: property_ if isinstance(property_, Donor) else SameValueDonor(property_),
-            iterable,
-        ))
+        self._donors = tuple(map(_convert_value_to_donor, iterable))
         self._seq_class = seq_class
 
     @property
@@ -134,12 +134,9 @@ class SeqOfProperties(Donor):
 
 
 class Property(object):
-    def __init__(self, name, donor):
+    def __init__(self, name, value):
         self._name = name
-        if not isinstance(donor, Donor):
-            donor = SameValueDonor(donor)
-
-        self._donor = donor
+        self._donor = _convert_value_to_donor(value)
 
     @property
     def name(self):
@@ -232,6 +229,13 @@ class _PropertyLookup(object):
 
     def update(self, other_property_lookup):
         return self._lookup.update(other_property_lookup.iteritems())
+
+
+def _convert_value_to_donor(value):
+    if not isinstance(value, Donor):
+        value = SameValueDonor(value)
+
+    return value
 
 
 def _convert_properties_to_property_lookup(*properties):
